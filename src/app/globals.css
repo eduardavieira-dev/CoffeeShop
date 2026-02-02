@@ -7,29 +7,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Scrollbar personalizada */
-::-webkit-scrollbar {
-  width: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: #181012;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--secondary);
-  border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--third);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--secondary) var(--background);
-}
 
 @theme inline {
   --color-background: var(--background);
