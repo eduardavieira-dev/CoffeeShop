@@ -13,7 +13,7 @@ export function Navbar() {
   return (
     <nav className="max-w-7xl mx-auto">
       <div className="flex items-center justify-between">
-        <h1 className="text-primary p-6 font-bold text-2xl">CoffeeShop</h1>
+        <a href="/"><h1 className="text-primary p-6 font-bold text-2xl">CoffeeShop</h1></a>
 
         {/* Menu Desktop */}
         <div className="hidden md:flex space-x-10 text-primary items-center p-6">
