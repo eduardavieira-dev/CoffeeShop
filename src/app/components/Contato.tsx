@@ -1,7 +1,7 @@
 export function Contato() {
 return (
     <div className="bg-contact" id="contact">
-        <main className="max-w-6xl mx-auto pb-8 px-6 lg:px-0 flex flex-col lg:flex-row items-center gap-8 justify-between">
+        <main className="max-w-6xl mx-auto pb-6 px-4 lg:px-0 flex flex-col lg:flex-row items-center gap-8 justify-between">
             <div className="p-4 flex justify-between flex-col lg:flex-row lg:items-center w-full lg:gap-20">
                 <div>
                 <h3 className="text-secondary text-xl uppercase">contato</h3>
