@@ -19,7 +19,7 @@ export function MainSection() {
       <img
         src="/cup.png"
         alt="Xícara de café"
-        className="w-105 object-contain px-4 sm:w-100 md:w-105 p-6"
+        className="w-105 object-contain px-4 sm:w-100 md:w-120 p-6 md:p-0"
       />
     </div>
   );
