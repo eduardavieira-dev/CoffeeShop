@@ -4,6 +4,7 @@ import { MainSection } from "./components/MainSection";
 import { Menu } from "./components/Menu";
 import { Navbar } from "./components/Navabar";
 import { Sobre } from "./components/Sobre";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Sobre />
       <Contato />
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }
