@@ -1,141 +1,278 @@
 "use client";
+import Link from "next/link";
+import { useState } from "react";
 
-import { useState, useEffect } from "react";
-import { Navbar } from "../components/Navabar";
-import { Footer } from "../components/Footer";
-import { ArrowLeft } from "@phosphor-icons/react";
-
-export default function CadastroCafe() {
-  const handleVoltar = () => {
-    window.history.back();
-  };
-
+export default function Cadastro() {
   const [formData, setFormData] = useState({
     nome: "",
-    descricao: "",
-    preco: "",
-    categoria: "",
+    sobrenome: "",
+    email: "",
+    telefone: "",
+    dataNascimento: "",
+    senha: "",
+    confirmarSenha: "",
   });
 
-  const [mensagem, setMensagem] = useState("");
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação básica
-    if (!formData.nome || !formData.preco) {
-      setMensagem("Por favor, preencha os campos obrigatórios.");
+    if (formData.senha !== formData.confirmarSenha) {
+      alert("As senhas não coincidem!");
       return;
     }
 
-    // Aqui você pode enviar para uma API
-    console.log("Dados do café:", formData);
-    setMensagem("Café cadastrado com sucesso! ☕");
-
-    // Limpar formulário após 2 segundos
-    setTimeout(() => {
-      setFormData({
-        nome: "",
-        descricao: "",
-        preco: "",
-        categoria: "",
-      });
-      setMensagem("");
-    }, 2000);
+    // Adicionar lógica de cadastro aqui
+    console.log("Cadastro:", formData);
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar />
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Lado esquerdo - Formulário */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-background px-6 sm:px-8 py-12">
+        <div className="w-full max-w-lg space-y-8">
+          {/* Cabeçalho */}
+          <div className="space-y-2">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              CoffeeShop
+            </h1>
+            <p className="text-third text-sm uppercase tracking-wider">
+              CAFÉS ARTESANAIS
+            </p>
+          </div>
 
-      <main className="border border-border rounded-md max-w-5xl mx-4 mt-10 p-6 bg-card md:mx-auto">
-        <div className="flex flex-col gap-6 md:flex-row justify-between ">
-          <div className="p-1 md:pl-3 w-full">
-            <button
-              onClick={handleVoltar}
-              className="text-primary hover:underline flex items-center gap-2 cursor-pointer"
-            >
-              <ArrowLeft size={18} /> <span>Voltar</span>
-            </button>
-            <h3 className="font-semibold text-primary text-3xl mt-2 text-center justify-center align-center items-center mx-auto mr-8">
-              Cadastro de Café
-            </h3>
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4 m-3">
-              <div>
-                <label className="block text-primary mb-1">Nome do Café*</label>
+          {/* Título */}
+          <div className="space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-medium text-white">
+              Crie uma conta
+            </h2>
+            <p className="text-foreground text-sm">
+              Junte-se à nossa comunidade e desfrute de benefícios exclusivos
+            </p>
+          </div>
+
+          {/* Formulário */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Nome e Sobrenome */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="nome"
+                  className="block text-white text-sm font-medium uppercase"
+                >
+                  NOME
+                </label>
                 <input
+                  id="nome"
                   type="text"
                   name="nome"
                   value={formData.nome}
                   onChange={handleChange}
-                  placeholder="Ex: Cappuccino Cremoso"
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-primary"
+                  placeholder="Seu nome"
+                  className="w-full px-4 py-3 bg-input border border-input-b text-white rounded-xs placeholder-input-text focus:outline-none focus:ring-2 focus:ring-third focus:border-transparent transition"
                   required
                 />
               </div>
-              <div>
-                <label className="block text-primary mb-1">Descrição*</label>
-                <textarea
-                  name="descricao"
-                  value={formData.descricao}
+              <div className="space-y-2">
+                <label
+                  htmlFor="sobrenome"
+                  className="block text-white text-sm font-medium uppercase"
+                >
+                  SOBRENOME
+                </label>
+                <input
+                  id="sobrenome"
+                  type="text"
+                  name="sobrenome"
+                  value={formData.sobrenome}
                   onChange={handleChange}
-                  placeholder="Ex: Espresso com leite vaporizado e espuma aveludada, polvilhado com canela."
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-primary"
+                  placeholder="Seu sobrenome"
+                  className="w-full px-4 py-3 bg-input border border-input-b text-white rounded-xs placeholder-input-text focus:outline-none focus:ring-2 focus:ring-third focus:border-transparent transition"
                   required
                 />
               </div>
-              <div className="flex flex-col md:flex-row gap-4 w-full">
-                <div className="w-full">
-                  <label className="block text-primary mb-1">Preço*</label>
-                  <input
-                    type="text"
-                    name="preco"
-                    value={formData.preco}
-                    onChange={handleChange}
-                    placeholder="R$ 12,00"
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-primary"
-                    required
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="block text-primary mb-1">Categoria*</label>
-                  <select
-                    name="categoria"
-                    value={formData.categoria}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-primary uppercase"
-                    required
-                  >
-                    <option value="quente">Cafés Quentes</option>
-                    <option value="gelado">Cafés Gelados</option>
-                    <option value="sobremesas">Sobremesas</option>
-                  </select>
-                </div>
-              </div>
-              <button className="bg-button-secondary text-center justify-center mx-auto w-full py-3  mt-4 rounded-md font-semibold hover:bg-secondary hover:text-primary transition cursor-pointer">
-                Cadastrar
-              </button>
-            </form>
-          </div>
+            </div>
 
+            {/* E-mail */}
+            <div className="space-y-2">
+              <label
+                htmlFor="email"
+                className="block text-white text-sm font-medium uppercase"
+              >
+                E-MAIL
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="seu@email.com"
+                className="w-full px-4 py-3 bg-input border border-input-b text-white rounded-xs placeholder-input-text focus:outline-none focus:ring-2 focus:ring-third focus:border-transparent transition"
+                required
+              />
+            </div>
+
+            {/* Telefone e Data de Nascimento */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="telefone"
+                  className="block text-white text-sm font-medium uppercase"
+                >
+                  TELEFONE
+                </label>
+                <input
+                  id="telefone"
+                  type="tel"
+                  name="telefone"
+                  value={formData.telefone}
+                  onChange={handleChange}
+                  placeholder="(00) 00000-0000"
+                  className="w-full px-4 py-3 bg-input border border-input-b text-white rounded-xs placeholder-input-text focus:outline-none focus:ring-2 focus:ring-third focus:border-transparent transition"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="dataNascimento"
+                  className="block text-white text-sm font-medium uppercase"
+                >
+                  DATA DE NASCIMENTO
+                </label>
+                <input
+                  id="dataNascimento"
+                  type="text"
+                  name="dataNascimento"
+                  value={formData.dataNascimento}
+                  onChange={handleChange}
+                  placeholder="dd/mm/aaaa"
+                  className="w-full px-4 py-3 bg-input border border-input-b text-white rounded-xs placeholder-input-text focus:outline-none focus:ring-2 focus:ring-third focus:border-transparent transition"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Senha e Confirmar Senha */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label
+                  htmlFor="senha"
+                  className="block text-white text-sm font-medium uppercase"
+                >
+                  SENHA
+                </label>
+                <input
+                  id="senha"
+                  type="password"
+                  name="senha"
+                  value={formData.senha}
+                  onChange={handleChange}
+                  placeholder="Mínimo 8 caracteres"
+                  className="w-full px-4 py-3 bg-input border border-input-b text-white rounded-xs placeholder-input-text focus:outline-none focus:ring-2 focus:ring-third focus:border-transparent transition"
+                  required
+                  minLength={8}
+                />
+              </div>
+              <div className="space-y-2">
+                <label
+                  htmlFor="confirmarSenha"
+                  className="block text-white text-sm font-medium uppercase"
+                >
+                  CONFIRMAR SENHA
+                </label>
+                <input
+                  id="confirmarSenha"
+                  type="password"
+                  name="confirmarSenha"
+                  value={formData.confirmarSenha}
+                  onChange={handleChange}
+                  placeholder="Digite novamente"
+                  className="w-full px-4 py-3 bg-input border border-input-b text-white rounded-xs placeholder-input-text focus:outline-none focus:ring-2 focus:ring-third focus:border-transparent transition"
+                  required
+                  minLength={8}
+                />
+              </div>
+            </div>
+
+            {/* Botão CRIAR CONTA */}
+            <button
+              type="submit"
+              className="w-full text-sm py-4 bg-third hover:bg-third/90 text-white font-semibold rounded-xs transition-colors duration-200 uppercase tracking-wide"
+            >
+              CRIAR CONTA
+            </button>
+          </form>
+
+          {/* Link para login */}
+          <div className="text-center">
+            <p className="text-foreground text-sm">
+              Já tem uma conta?{" "}
+              <Link
+                href="/login"
+                className="text-third hover:text-third/90 font-medium transition-colors"
+              >
+                Faça login
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Lado direito - Imagem e Benefícios */}
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center bg-black py-12 px-6 sm:px-8">
+        {/* Imagem centralizada */}
+        <div className="w-full max-w-md mb-12 flex items-center justify-center">
           <img
-            src="./cadastro-coffee.png"
-            className="object-cover rounded-md"
-            alt=""
+            src="/cadastro-img.png"
+            alt="Coffee preparation"
+            className="w-full h-auto object-cover rounded-lg"
           />
         </div>
-      </main>
 
-      <Footer />
+        {/* Benefícios */}
+        <div className="w-full max-w-md space-y-6">
+          <div className="flex items-start gap-4 sm:gap-6 border border-third/30 rounded-lg p-4 sm:p-5 hover:border-third/60 transition-colors">
+            <span className="text-third text-4xl pt-1 pl-2 font-bold shrink-0">01</span>
+            <div className="pt-1">
+              <h3 className="text-white text-lg sm:text-xl font-semibold mb-1">
+                Favorite seus cafés
+              </h3>
+              <p className="text-foreground text-sm">
+                Salve os cafés que você mais gosta
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4 sm:gap-6 border border-third/30 rounded-lg p-4 sm:p-5 hover:border-third/60 transition-colors">
+            <span className="text-third text-4xl pt-1 pl-2 font-bold shrink-0">02</span>
+            <div className="pt-1">
+              <h3 className="text-white text-lg sm:text-xl font-semibold mb-1">
+                Filtre por categoria
+              </h3>
+              <p className="text-foreground text-sm">
+                Pesquise seus cafés e encontre-os
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-4 sm:gap-6 border border-third/30 rounded-lg p-4 sm:p-5 hover:border-third/60 transition-colors">
+            <span className="text-third text-4xl pt-1 pl-2 font-bold shrink-0">03</span>
+            <div className="pt-1">
+              <h3 className="text-white text-lg sm:text-xl font-semibold mb-1">
+                Gerencie seus cafés
+              </h3>
+              <p className="text-foreground text-sm">
+                Adicione, remova e edite seus cafés
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
